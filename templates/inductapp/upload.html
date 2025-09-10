@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Data - Kochi Metro{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-6 mb-1">Data Upload</h1>
+            <p class="text-muted">Import train data from CSV or Excel files</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Upload Form -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-cloud-upload me-2"></i>
+                        Upload File
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" id="upload-form">
+                        {% csrf_token %}
+                        <div class="upload-area" id="upload-area">
+                            <div class="upload-content">
+                                <i class="bi bi-cloud-upload display-4 text-muted mb-3"></i>
+                                <h5>Drag and drop your file here</h5>
+                                <p class="text-muted">or click to browse</p>
+                                <input type="file" id="file-input" name="file" class="form-control" 
+                                       accept=".csv,.xlsx,.xls" hidden>
+                                <button type="button" class="btn btn-metro-primary" id="browse-btn">
+                                    Browse Files
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="file-info" class="mt-3" style="display: none;">
+                            <div class="selected-file">
+                                <i class="bi bi-file-earmark-spreadsheet me-2"></i>
+                                <span id="file-name"></span>
+                                <button type="button" class="btn btn-sm btn-outline-danger ms-2" id="remove-file">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-success" id="upload-btn" disabled>
+                                <i class="bi bi-upload me-2"></i>
+                                Upload and Preview
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Preview Section -->
+            {% if preview_data %}
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-eye me-2"></i>
+                        Data Preview
+                    </h5>
+                    <div>
+                        <span class="badge bg-info">{{ total_rows }} rows total</span>
+                        <span class="badge bg-secondary">Showing first 10</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    {% for column in column_names %}
+                                    <th>{{ column }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in preview_data %}
+                                <tr>
+                                    {% for column in column_names %}
+                                   
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-outline-secondary" onclick="window.location.reload()">
+                            <i class="bi bi-arrow-counterclockwise me-2"></i>
+                            Upload Different File
+                        </button>
+                        <button class="btn btn-success" id="import-data-btn">
+                            <i class="bi bi-database me-2"></i>
+                            Import to Database
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle me-2"></i>
+                        File Requirements
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            CSV (.csv) or Excel (.xlsx, .xls) formats
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            Maximum file size: 10MB
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            First row should contain column headers
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            UTF-8 encoding recommended
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-table me-2"></i>
+                        Expected Columns
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="expected-columns">
+                        <div class="column-item">
+                            <strong>train_number</strong>
+                            <small class="text-muted d-block">Unique identifier (e.g., KM-001)</small>
+                        </div>
+                        <div class="column-item">
+                            <strong>train_name</strong>
+                            <small class="text-muted d-block">Display name</small>
+                        </div>
+                        <div class="column-item">
+                            <strong>current_mileage</strong>
+                            <small class="text-muted d-block">Numeric value in km</small>
+                        </div>
+                        <div class="column-item">
+                            <strong>status</strong>
+                            <small class="text-muted d-block">ok, minor_maintenance, cannot_schedule</small>
+                        </div>
+                        <div class="column-item">
+                            <strong>current_stabling_bay</strong>
+                            <small class="text-muted d-block">Current location</small>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-download me-2"></i>
+                            Download Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// File upload handling
+const uploadArea = document.getElementById('upload-area');
+const fileInput = document.getElementById('file-input');
+const browseBtn = document.getElementById('browse-btn');
+const uploadBtn = document.getElementById('upload-btn');
+const fileInfo = document.getElementById('file-info');
+const fileName = document.getElementById('file-name');
+const removeFileBtn = document.getElementById('remove-file');
+
+// Click to browse
+browseBtn.addEventListener('click', () => {
+    fileInput.click();
+});
+
+uploadArea.addEventListener('click', () => {
+    fileInput.click();
+});
+
+// Drag and drop
+uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        fileInput.files = files;
+        handleFileSelect(files[0]);
+    }
+});
+
+// File selection
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        handleFileSelect(e.target.files[0]);
+    }
+});
+
+function handleFileSelect(file) {
+    // Validate file type
+    const allowedTypes = ['.csv', '.xlsx', '.xls'];
+    const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+    
+    if (!allowedTypes.includes(fileExtension)) {
+        alert('Please select a CSV or Excel file');
+        return;
+    }
+    
+    // Validate file size (10MB limit)
+    if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be less than 10MB');
+        return;
+    }
+    
+    // Update UI
+    fileName.textContent = file.name;
+    fileInfo.style.display = 'block';
+    uploadBtn.disabled = false;
+    uploadArea.classList.add('has-file');
+}
+
+// Remove file
+removeFileBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    fileInfo.style.display = 'none';
+    uploadBtn.disabled = true;
+    uploadArea.classList.remove('has-file');
+});
+
+// Import data functionality
+document.getElementById('import-data-btn')?.addEventListener('click', function() {
+    this.disabled = true;
+    this.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Importing...';
+    
+    fetch('/api/import/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Successfully imported ${data.imported_count} records!`);
+            window.location.href = '/ranklist/';
+        } else {
+            alert('Import failed: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Import failed. Please try again.');
+    })
+    .finally(() => {
+        this.disabled = false;
+        this.innerHTML = '<i class="bi bi-database me-2"></i>Import to Database';
+    });
+});
+
+// Template filter for Django
+// This would normally be handled by a custom template filter
+// For demonstration purposes only
+if (typeof lookup === 'undefined') {
+    function lookup(obj, key) {
+        return obj[key];
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+
+{% block title %}Train Ranklist - Kochi Metro{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Page background */
+  body {
+    background-color: #f4f7f6;
+  }
+
+  /* Main container */
+  .container {
+    max-width: 1200px;
+  }
+
+  /* Train Card Styling */
+  .train-card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* Important for the ribbon */
+    position: relative; /* Important for the ribbon */
+  }
+
+  .train-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  }
+
+  .train-card .card-body {
+    padding: 1.5rem;
+  }
+  
+  .train-icon {
+    font-size: 2rem;
+    color: #02B0AF;
+  }
+
+  .train-card .card-title {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .train-card .card-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+  
+  .train-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+    font-size: 0.85rem;
+    color: #555;
+  }
+  
+  .train-stats .stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .details-btn {
+    background-color: #C1D72D;
+    border: none;
+    font-weight: 500;
+    width: 100%;
+    padding: 0.6rem;
+    margin-top: 1rem;
+    transition: background-color 0.2s;
+  }
+  
+  .details-btn:hover {
+    background-color: #a8b926;
+  }
+
+  /* Corner Ribbon Styling */
+  .ribbon {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+  }
+  
+  .ribbon span {
+    position: absolute;
+    display: block;
+    width: 170px;
+    padding: 8px 0;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    text-align: center;
+    left: -25px;
+    top: 30px;
+    transform: rotate(45deg);
+    cursor: pointer;
+  }
+  
+  /* Ribbon Colors */
+  .ribbon-ok span { background-color: #28a745; } /* Green */
+  .ribbon-minor_maintenance span { background-color: #fd7e14; } /* Orange */
+  .ribbon-cannot_schedule span { background-color: #dc3545; } /* Red */
+  
+  /* Issue Window */
+  .issue-window {
+    position: absolute;
+    top: 65px;
+    right: 15px;
+    background: #fff;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    padding: 12px 15px;
+    width: 250px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    display: none;
+    z-index: 5;
+  }
+
+  .issue-window::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+    filter: drop-shadow(0 -2px 2px rgba(0,0,0,0.1));
+  }
+
+  .ribbon:hover + .issue-window {
+    display: block;
+    animation: fadeIn 0.25s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-6 mb-1">Train Induction Ranklist</h1>
+            <p class="text-muted">Live status of the Kochi Metro fleet.</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="get" class="search-box">
+                {% csrf_token %} <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                    <input type="text" name="search" class="form-control border-start-0" 
+                           placeholder="Search by train number or name..." 
+                           value="{{ search_query }}">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 text-md-end mt-2 mt-md-0">
+             <a href="{% url 'upload' %}" class="btn btn-outline-primary me-2">
+                <i class="bi bi-upload me-2"></i>Upload Data
+             </a>
+             <button id="generate-report" class="btn btn-outline-secondary">
+                <i class="bi bi-file-earmark-text me-2"></i>Generate Report
+             </button>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for train in trains %}
+        <div class="col">
+            <div class="card train-card h-100">
+                <div class="ribbon">
+                    <span class="ribbon-{{ train.status }}">
+                        {% if train.status == 'ok' %}
+                          Ready
+                        {% elif train.status == 'minor_maintenance' %}
+                          Warning
+                        {% else %}
+                          Critical
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="issue-window">
+                  {{ train.status_notes|default:"All systems operational." }}
+                </div>
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-train-lightrail-front train-icon me-3"></i>
+                        <div>
+                            <h5 class="card-title mb-0">{{ train.train_number }}</h5>
+                            <h6 class="card-subtitle text-muted">{{ train.train_name }}</h6>
+                        </div>
+                    </div>
+
+                    <p class="card-text small">
+                        <span class="badge bg-light text-dark">Rank #{{ train.rank }}</span>
+                        <span class="badge 
+                            {% if 'clean' in train.cleaning_status|lower %}
+                                bg-success-subtle text-success-emphasis
+                            {% else %}
+                                bg-warning-subtle text-warning-emphasis
+                            {% endif %}
+                        ">
+                            <i class="bi bi-droplet-fill me-1"></i>{{ train.cleaning_status }}
+                        </span>
+                    </p>
+
+                    <div class="train-stats">
+                        <div class="stat" title="Current Mileage">
+                            <i class="bi bi-speedometer2"></i>
+                            <span>{{ train.current_mileage }} km</span>
+                        </div>
+                        <div class="stat" title="Current Location">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <span>{{ train.current_stabling_bay }}</span>
+                        </div>
+                        <div class="stat" title="Last Service Date">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>{{ train.last_service_date|date:"d M Y" }}</span>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'train_detail' train.id %}" class="btn btn-dark details-btn">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="text-center p-5 bg-light rounded">
+                <i class="bi bi-train-lightrail-front text-muted" style="font-size: 3rem;"></i>
+                <h4 class="text-muted mt-3">No trains found</h4>
+                <p class="text-muted">Try adjusting your search criteria or upload data.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Generate report functionality
+document.getElementById('generate-report').addEventListener('click', function() {
+    this.disabled = true;
+    this.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Generating...';
+
+    fetch("{% url 'api_report' %}", {
+        method: 'GET', // Changed to GET as it's simpler for a download
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            const filename = `metro_trains_report_${new Date().toISOString().split('T')[0]}.csv`;
+            response.blob().then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+            });
+        } else {
+            throw new Error('Failed to generate report');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while generating the report.');
+    })
+    .finally(() => {
+        // Re-enable the button after a short delay
+        setTimeout(() => {
+            this.disabled = false;
+            this.innerHTML = '<i class="bi bi-file-earmark-text me-2"></i>Generate Report';
+        }, 1000);
+    });
+});
+</script>
+{% endblock %}

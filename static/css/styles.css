@@ -1,0 +1,755 @@
+/* Kochi Metro Induction System Styles */
+
+:root {
+    --metro-primary: #02B0AF;
+    --metro-accent: #C1D72D; 
+    --metro-dark: #1a1a1a;
+    --metro-light: #f8f9fa;
+    --metro-success: #28a745;
+    --metro-warning: #ffc107;
+    --metro-danger: #dc3545;
+    --metro-info: #17a2b8;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: var(--metro-light);
+}
+
+/* Custom Bootstrap Colors */
+.bg-metro-primary {
+    background-color: var(--metro-primary) !important;
+}
+
+.bg-metro-accent {
+    background-color: var(--metro-accent) !important;
+    color: var(--metro-dark) !important;
+}
+
+.btn-metro-primary {
+    background-color: var(--metro-primary);
+    border-color: var(--metro-primary);
+    color: white;
+}
+
+.btn-metro-primary:hover {
+    background-color: #029a99;
+    border-color: #029a99;
+    color: white;
+}
+
+.btn-metro-accent {
+    background-color: var(--metro-accent);
+    border-color: var(--metro-accent);
+    color: var(--metro-dark);
+}
+
+.btn-metro-accent:hover {
+    background-color: #a8b825;
+    border-color: #a8b825;
+    color: var(--metro-dark);
+}
+
+/* Login Page Styles */
+.login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--metro-primary) 0%, var(--metro-accent) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-header {
+    margin-bottom: 30px;
+}
+
+.metro-logo {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--metro-primary), var(--metro-accent));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2rem;
+    color: white;
+}
+
+.login-header h2 {
+    color: var(--metro-primary);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    color: #666;
+    margin: 0;
+}
+
+.login-form .form-control {
+    border-radius: 10px;
+    border: 2px solid #eee;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+
+.login-form .form-control:focus {
+    border-color: var(--metro-primary);
+    box-shadow: 0 0 0 0.2rem rgba(2, 176, 175, 0.25);
+}
+
+.login-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* Navigation Styles */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.badge.bg-metro-accent {
+    color: var(--metro-dark) !important;
+}
+
+/* Train Cards */
+.train-card-container {
+    transition: transform 0.3s ease;
+}
+
+.train-card-container:hover {
+    transform: translateY(-5px);
+}
+
+.train-card {
+    border: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.train-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.train-image-placeholder {
+    height: 120px;
+    background: linear-gradient(135deg, var(--metro-primary), var(--metro-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem;
+    position: relative;
+}
+
+.rank-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--metro-primary);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.train-stats {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.train-stats .stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.train-stats .stat i {
+    color: var(--metro-primary);
+}
+
+/* Status Ribbons */
+.status-ribbon {
+    position: absolute;
+    top: 15px;
+    left: -10px;
+    z-index: 10;
+    padding: 8px 20px 8px 15px;
+    border-radius: 0 5px 5px 0;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transform: perspective(10px) rotateX(2deg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.status-ribbon:hover {
+    transform: perspective(10px) rotateX(0deg) scale(1.05);
+}
+
+.ribbon-ok {
+    background: linear-gradient(135deg, var(--metro-success), #20c997);
+}
+
+.ribbon-minor_maintenance {
+    background: linear-gradient(135deg, var(--metro-warning), #ffcd56);
+}
+
+.ribbon-cannot_schedule {
+    background: linear-gradient(135deg, var(--metro-danger), #ff6b7a);
+}
+
+.ribbon-tooltip {
+    position: absolute;
+    bottom: -35px;
+    left: 0;
+    background: var(--metro-dark);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.status-ribbon:hover .ribbon-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Search and Filter Controls */
+.search-box {
+    margin-bottom: 20px;
+}
+
+.search-box .input-group-text {
+    background-color: var(--metro-primary);
+    color: white;
+    border-color: var(--metro-primary);
+}
+
+.search-box .form-control {
+    border-color: var(--metro-primary);
+}
+
+.search-box .form-control:focus {
+    border-color: var(--metro-primary);
+    box-shadow: 0 0 0 0.2rem rgba(2, 176, 175, 0.25);
+}
+
+.sort-controls .btn-check:checked + .btn {
+    background-color: var(--metro-primary);
+    border-color: var(--metro-primary);
+    color: white;
+}
+
+/* Train Detail Styles */
+.train-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.train-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--metro-primary), var(--metro-accent));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5rem;
+}
+
+.rank-display {
+    text-align: center;
+}
+
+.rank-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--metro-primary);
+    display: block;
+}
+
+.info-group {
+    margin-bottom: 20px;
+}
+
+.info-group label {
+    display: block;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.info-group .field-value {
+    display: block;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    min-height: 35px;
+    line-height: 1.5;
+}
+
+.editable-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.editable-field .edit-btn {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.editable-field:hover .edit-btn {
+    opacity: 1;
+}
+
+.job-card-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.job-card-item:last-child {
+    border-bottom: none;
+}
+
+/* Certificate Styles */
+.upload-zone {
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.upload-zone:hover {
+    border-color: var(--metro-primary);
+    background-color: rgba(2, 176, 175, 0.05);
+}
+
+.upload-zone.has-file {
+    border-color: var(--metro-success);
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.upload-content i {
+    color: #ccc;
+}
+
+.upload-help {
+    margin: 15px 0;
+}
+
+.certificate-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.certificate-item:last-child {
+    border-bottom: none;
+}
+
+.cert-name {
+    font-weight: 500;
+}
+
+.selected-file {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #e7f3ff;
+    border-radius: 8px;
+    border: 1px solid #b6d7ff;
+}
+
+/* Upload Page Styles */
+.upload-area {
+    border: 3px dashed #ddd;
+    border-radius: 15px;
+    padding: 60px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: #fafbfc;
+}
+
+.upload-area:hover, .upload-area.dragover {
+    border-color: var(--metro-primary);
+    background-color: rgba(2, 176, 175, 0.05);
+}
+
+.upload-area.has-file {
+    border-color: var(--metro-success);
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.upload-content h5 {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.expected-columns .column-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.expected-columns .column-item:last-child {
+    border-bottom: none;
+}
+
+/* Chatbot Styles */
+#chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.chat-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--metro-primary), var(--metro-accent));
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.chat-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); }
+    50% { box-shadow: 0 4px 20px rgba(2, 176, 175, 0.4); }
+    100% { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); }
+}
+
+.chat-widget {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 350px;
+    max-height: 500px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.chat-widget.active {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.chat-header {
+    background: linear-gradient(135deg, var(--metro-primary), var(--metro-accent));
+    color: white;
+    padding: 15px 20px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.chat-header i {
+    font-size: 1.2rem;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    max-width: 80%;
+    animation: fadeInUp 0.3s ease;
+}
+
+.message.bot-message {
+    align-self: flex-start;
+}
+
+.message.user-message {
+    align-self: flex-end;
+}
+
+.message-content {
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.bot-message .message-content {
+    background: #f1f3f4;
+    color: #333;
+}
+
+.user-message .message-content {
+    background: var(--metro-primary);
+    color: white;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-input {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    border-radius: 0 0 20px 20px;
+}
+
+.chat-input .form-control {
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+}
+
+.chat-input .btn {
+    border-radius: 25px;
+    padding: 10px 15px;
+}
+
+/* Verification Modal */
+.extracted-fields .field-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.extracted-fields .field-group:last-child {
+    border-bottom: none;
+}
+
+.extracted-fields label {
+    font-weight: 600;
+    color: #555;
+}
+
+.confidence-score {
+    text-align: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .train-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .train-stats {
+        justify-content: center;
+    }
+    
+    .chat-widget {
+        width: calc(100vw - 40px);
+        right: 20px;
+        left: 20px;
+    }
+    
+    .search-box, .sort-controls {
+        margin-bottom: 15px;
+    }
+    
+    .sort-controls .btn-group {
+        width: 100%;
+        display: flex;
+    }
+    
+    .sort-controls .btn {
+        flex: 1;
+        font-size: 0.8rem;
+    }
+    
+    .upload-area {
+        padding: 40px 15px;
+    }
+    
+    .login-card {
+        margin: 20px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .train-card .card-body {
+        padding: 15px;
+    }
+    
+    .train-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .display-6 {
+        font-size: 1.5rem;
+    }
+    
+    .train-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .rank-number {
+        font-size: 2rem;
+    }
+}
+
+/* Custom scrollbar for chat */
+.chat-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--metro-primary);
+    border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #029a99;
+}
+
+/* Status badge colors */
+.bg-ok {
+    background-color: var(--metro-success) !important;
+}
+
+.bg-minor_maintenance {
+    background-color: var(--metro-warning) !important;
+    color: var(--metro-dark) !important;
+}
+
+.bg-cannot_schedule {
+    background-color: var(--metro-danger) !important;
+}
+
+/* Utility classes */
+.text-metro-primary {
+    color: var(--metro-primary) !important;
+}
+
+.text-metro-accent {
+    color: var(--metro-accent) !important;
+}
+
+.border-metro-primary {
+    border-color: var(--metro-primary) !important;
+}
+
+.border-metro-accent {
+    border-color: var(--metro-accent) !important;
+}
+
+/* Loading states */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--metro-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
