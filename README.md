@@ -27,3 +27,70 @@ Our solution is a centralized AI platform that transforms this manual task into 
 * **💬 AI Chatbot:** An integrated chatbot for staff to get instant answers about train availability and status.
 
 ---
+
+## 🛠️ Technology Stack
+
+* **Backend:** Python, Django Framework
+* **Frontend:** Django Templates, HTML, CSS, JavaScript, Bootstrap 5
+* **Database:** PostgreSQL (Production), SQLite3 (Development)
+* **API:** Django REST Framework (DRF)
+* **Deployment:** Docker, Gunicorn, Nginx
+
+
+
+---
+## 🚀 Getting Started
+
+Follow these instructions to get a local copy up and running for development and testing.
+
+### Prerequisites
+
+* Python 3.10+
+* Pip (Python Package Installer)
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/your-username/your-repository-name.git](https://github.com/your-username/your-repository-name.git)
+    cd your-repository-name
+    ```
+
+2.  **Create and activate a virtual environment:**
+    ```bash
+    # For Windows
+    python -m venv venv
+    .\venv\Scripts\activate
+
+    # For macOS/Linux
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3.  **Install the required packages:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Apply database migrations:**
+    ```bash
+    python manage.py migrate
+    ```
+
+5.  **Create a superuser to access the admin panel:**
+    ```bash
+    python manage.py createsuperuser
+    ```
+
+6.  **(Optional) Seed the database with sample data:**
+    ```bash
+    python manage.py seed_trains
+    ```
+
+7.  **Run the development server:**
+    ```bash
+    python manage.py runserver
+    ```
+    The application will be available at `http://127.0.0.1:8000/`.
+
+---
