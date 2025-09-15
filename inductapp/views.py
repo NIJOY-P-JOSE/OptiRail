@@ -187,9 +187,6 @@ def ranklist_view(request):
 
 
 
-
-
-#@login_required  
 def train_detail_view(request, train_id):
     """Display detailed train information with role-based editing."""
     if not request.session.get('is_authenticated'):
@@ -319,8 +316,6 @@ def upload_view(request):
             messages.error(request, f'Error reading file: {str(e)}')
     
     return render(request, 'inductapp/upload.html', context)
-
-
 
 
 
