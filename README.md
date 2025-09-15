@@ -3,7 +3,7 @@
 
 An intelligent decision-support platform built with Python and Django to automate and optimize the daily train induction and scheduling process for Kochi Metro Rail Limited (KMRL).
 
-<img width="960" height="546" alt="image" src="https://github.com/user-attachments/assets/f00e1e11-b8d4-4838-a0c6-2807431a8fec" />
+<img width="400" height="227.5" alt="image" src="https://github.com/user-attachments/assets/f00e1e11-b8d4-4838-a0c6-2807431a8fec" />
 
 
 
