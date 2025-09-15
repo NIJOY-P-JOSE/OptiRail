@@ -94,3 +94,26 @@ Follow these instructions to get a local copy up and running for development and
     The application will be available at `http://127.0.0.1:8000/`.
 
 ---
+## 📖 Usage
+
+* **Main Application:** `http://127.0.0.1:8000/`
+* **Admin Panel:** `http://127.0.0.1:8000/admin/`
+
+### Demo Credentials
+
+You can log in with different roles to see the permission system in action. The role is assigned based on the username.
+
+| Username    | Role                 |
+| ----------- | -------------------- |
+| `admin`     | Administrator        |
+| `officer`   | Metro Officer        |
+| `operator`  | Train Operator       |
+| `maintenance`| Maintenance Worker |
+| `cleaner`   | Cleaner              |
+
+---
+## 📈 Future Scope
+
+* **Full Mobile App:** Develop the Flutter mobile app and connect it to the Django REST Framework API.
+* **Real-Time IoT Integration:** Integrate with on-train sensors for live fitness and mileage data.
+* **Deeper Predictive Analytics:** Enhance the ML model to predict component failure rates and optimize spare parts inventory.
