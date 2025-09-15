@@ -1,9 +1,8 @@
-# OptiRail
+# 🚆 OptiRail: AI-Driven Train Scheduling System for Kochi Metro
 
-<img width="1600" height="910" alt="image" src="https://github.com/user-attachments/assets/f00e1e11-b8d4-4838-a0c6-2807431a8fec" />
+<img width="960" height="546" alt="image" src="https://github.com/user-attachments/assets/f00e1e11-b8d4-4838-a0c6-2807431a8fec" />
 
 
-# 🚆 AI-Driven Train Scheduling System for Kochi Metro
 
 An intelligent decision-support platform built with Python and Django to automate and optimize the daily train induction and scheduling process for Kochi Metro Rail Limited (KMRL).
 
