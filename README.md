@@ -24,10 +24,18 @@ Our solution is a centralized AI platform that transforms this manual task into 
 * **📊 One-Click Reporting:** Instantly generate and download the daily induction list as a formal CSV report.
 * **💬 AI Chatbot:** An integrated chatbot for staff to get instant answers about train availability and status.
 
+---
+
 <img width="1528" height="990" alt="Untitled design" src="https://github.com/user-attachments/assets/df0c0f08-09e0-476f-acc3-c5b5e5c8224f" />
 
 
 ---
+
+<img width="3840" height="611" alt="Untitled diagram _ Mermaid Chart-2025-09-17-143312" src="https://github.com/user-attachments/assets/b757d6f8-01a3-4af6-9dab-3e58f54bac75" />
+
+
+---
+
 
 ## 🛠️ Technology Stack
 
